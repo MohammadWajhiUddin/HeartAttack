@@ -7,6 +7,7 @@ import {
   Button,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { Camera, CameraType } from "expo-camera";
@@ -60,9 +61,11 @@ export default function Camerascreen({ navigation }) {
     if (cameraRef) {
       let newPhoto = await cameraRef.current.takePictureAsync(options);
       if (hasMediaLibraryPermission) {
-        await MediaLibrary.createAssetAsync(newPhoto.uri);
-        alert('Photo saved to gallery!');
-        setPhoto(newPhoto);
+       // await MediaLibrary.createAssetAsync(newPhoto.uri);
+       // alert('Photo saved to gallery!');
+
+       //console.log(newPhoto.uri)
+       setPhoto(newPhoto.uri);
 
       }
     }
@@ -74,42 +77,50 @@ export default function Camerascreen({ navigation }) {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
+      aspect: [4, 3],
+
       quality: 1,
     });
 
-    console.log(result);
-
-    if (!result.cancelled) {
-      setPhoto(result);
+    if (!result.canceled) {
+      setPhoto(result.assets[0].uri);
     }
+
+
+    
   };
 
+  console.log("photos")
+
   async function sendPhoto() {
-    // const photoData = new FormData();
-    // photoData.append('image', {
-    //     uri: photo.uri,
-    //     type: 'image/jpeg',
-    //     name: 'photo.jpg',
-    // });
-    // try {
-    //     const response = await fetch('http://192.168.0.112:5000/predict_image', {
-    //         method: 'POST',
-    //         body: photoData,
-    //     });
-    //     if (response.status !== 200) {
-    //         console.log(response.status);
-    //     }
-    //     const responseJson = await response.json();
-    //     navigation.navigate('Result', { prediction: responseJson });
-    //     console.log(responseJson);
-    // } catch (error) {
-    //     console.log(error);
-    // }
+    const photoData = new FormData();
+    photoData.append('image', {
+        uri: photo,
+        type: 'image/png',
+        name: 'photo.png',
+    });
+    try {
+        const response = await fetch('http://192.168.100.17:5000/predictimage', {
+            method: 'POST',
+            body: photoData,
+        });
+        if (response.status !== 200) {
+            console.log(response.status);
+        }
+        const responseJson = await response.json();
+//navigation.navigate('Result', { prediction: responseJson });
+        console.log("response",responseJson);
+        Alert.alert("Response from Ml",responseJson.class)
+       
+    } catch (error) {
+        console.log(error);
+    }
   }
 
   if (photo) {
     let savePhoto = () => {
-      MediaLibrary.saveToLibraryAsync(photo.uri);
+       MediaLibrary.createAssetAsync(photo.uri);
+      alert('Photo saved to gallery!');
     };
 
     let resetCamera = () => {
@@ -118,7 +129,7 @@ export default function Camerascreen({ navigation }) {
 
     return (
       <SafeAreaView style={styles.container}>
-        <Image style={styles.preview} source={{ uri: photo.uri }} />
+         <Image style={styles.preview} source={{ uri: photo }} resizeMode="contain" />
         <LinearGradient
           colors={["#070a13", "#164047", "#070a13"]}
           style={styles.button}
@@ -135,8 +146,8 @@ export default function Camerascreen({ navigation }) {
               backgroundColor: "transparent",
             }}
             onPress={() => {
-              savePhoto();
-              // sendPhoto();
+               sendPhoto();
+               // savePhoto();
             }}
           >
             <Text style={{ color: "#ffffff", fontFamily: "monospace" }}>
@@ -161,7 +172,7 @@ export default function Camerascreen({ navigation }) {
                 backgroundColor: "transparent",
               }}
               onPress={() => {
-                resetCamera();
+                savePhoto();
               }}
             >
               <Text style={{ color: "#ffffff", fontFamily: "monospace" }}>
