@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text,Alert, Image, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { EnvelopeOpenIcon, PhoneIcon } from "react-native-heroicons/solid";
+import { adduserhealthlogs } from "../services/ALLAPIS";
 
 export default function PredictViaHeartForm({ route }) {
   const {
@@ -25,14 +26,16 @@ export default function PredictViaHeartForm({ route }) {
 
   const [storedData, setStoredData] = useState(null);
   const [predictedResult, setPredictedResult] = useState(false);
+ const [loading,setLoading] = useState(false)
 
   useEffect(() => {
     getData();
     myFunction();
+
   }, []);
 
   function myFunction() {
-    if (dataresponse == "No you dont have a heart disease") {
+    if (dataresponse == 0) {
       setPredictedResult(false);
     } else {
       setPredictedResult(true);
@@ -45,13 +48,47 @@ export default function PredictViaHeartForm({ route }) {
       if (jsonValue != null) {
         const user = JSON.parse(jsonValue);
         setStoredData(user);
+        submitForm(user)
+
       }
     } catch (error) {
-      console.error("Error retrieving data:", error);
+      Alert.alert("Error retrieving data:")
+    }
+
+
+  };
+
+
+
+  const submitForm = async (user) => {
+
+    let payload = {
+      user_id:user?._id,
+      userName:user?.userName,
+      predictedResult:predictedResult,
+      Sex:Sex,
+      age:age,
+      SysBP:SysBP,
+      DiaBP:DiaBP,
+      HR:HR,
+      Weight:weightKg,
+      Height:heightInCm,
+      BMI:BMI,
+    };
+    console.log("sssssssssssssssssss",payload)
+
+   let response = await adduserhealthlogs(payload);
+    if (response.status == 201) {
+   //   setLoading(false);
+     // Alert.alert(response.data);    
+    //  storeData(response.data.data);
+     } else {
+      // Alert.alert(response.data);
+      //setLoading(false);
     }
   };
 
-  console.log(storedData);
+
   return (
     <SafeAreaView className="bg-white flex-1">
       <StatusBar barStyle="dark-content" />

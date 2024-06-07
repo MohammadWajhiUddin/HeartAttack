@@ -3,12 +3,12 @@ export const requestType = {
     GET: "get",
     PUT: "put",
     DELETE: "delete",
-};+9
+};
 
 export const endPoints = {
     registerUser: "registerUser",
     loginUser: "loginUser",
-    // resetPassword: "resetPasswordUser",
+    adduserhealthlogs: "adduserhealthlogs",
 
     // //User
     // getUser: "getUser",

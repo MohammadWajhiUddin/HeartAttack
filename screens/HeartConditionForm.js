@@ -61,7 +61,7 @@ export default function HeartConditionForm() {
 
       if(data.results == 1|| data.results == 0){
         setLoading(false)
-        navigation.navigate('PredictViaHeartForm',{dataresponse:data.prediction_class,
+        navigation.navigate('PredictViaHeartForm',{dataresponse:data.results,
           age: age,
           Sex: Sex,
           SysBP: sysBp,
@@ -72,14 +72,13 @@ export default function HeartConditionForm() {
           BMI: BMI
         })
       }else{      
-          setLoading(false)
+        //  setLoading(false)
 
         Alert.alert("There might be some issue, kindly fill the form correctly")
       }
      // Alert.alert(data.prediction_class)
 
      //navigation.navigate('PredictViaHeartForm',{dataresponse:data.prediction_class})
-      console.log(data.resp);
     } catch (error) {
       console.error("",error);
     }

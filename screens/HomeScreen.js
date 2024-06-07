@@ -16,25 +16,10 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
   const navigation = useNavigation();
-  const [storedData, setStoredData] = useState('');
-
-  useEffect(() => {
-    getData();
-  }, []);
 
 
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('UserData');
-      if (value !== null) {
-        setStoredData(value);
-      }
-    } catch (error) {
-      console.error('Error retrieving data:', error);
-    }
 
-  };
-  console.log("stored values",storedData)
+
 
   return (
     

@@ -13,6 +13,10 @@ export const loginUser = (params) => {
     return Api(endPoints.loginUser, params, requestType.POST)
 }
 
+export const adduserhealthlogs = (params) => {
+    return Api(endPoints.adduserhealthlogs, params, requestType.POST)
+}
+
 // export const resetPasswordUser = (params) => {
 //     return Api(endPoints.resetPassword, params, requestType.POST)
 // }

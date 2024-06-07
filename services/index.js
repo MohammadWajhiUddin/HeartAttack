@@ -1,8 +1,9 @@
 import axios from "axios";
 // let baseUrl = "http://192.168.0.104:5000/api/";
-let baseUrl = 'https://hearbackend.vercel.app/HeartAttackDB/Users/';
+//let baseUrl = 'https://hearbackend.vercel.app/HeartAttackDB/Users/';
 // let baseUrl = "https://server-portal-pied.vercel.app/api/";
- 
+let baseUrl = "http://192.168.100.17:3000/HeartAttackDB/Users/";
+
 const api = async (path, params, method) => {
     let options;
     options = {
