@@ -58,7 +58,7 @@ export default function PredictViaHeartForm({ route }) {
     let payload = {
       user_id: user?._id,
       userName: user?.userName,
-      predictedResult: predictedResult,
+      predictedResult: dataresponse,
       Sex: Sex,
       age: age,
       SysBP: SysBP,
@@ -68,7 +68,6 @@ export default function PredictViaHeartForm({ route }) {
       Height: heightInCm,
       BMI: BMI,
     };
-    console.log("sssssssssssssssssss", payload);
 
     let response = await adduserhealthlogs(payload);
     if (response.status == 201) {

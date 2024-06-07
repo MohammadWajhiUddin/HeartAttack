@@ -58,13 +58,12 @@ function MyTabs() {
 function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="SplashScreen">
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="MyTabs">
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} />
         <Stack.Screen name="MyTabs" component={MyTabs} options={{ headerShown: false }}/>
         <Stack.Screen name="HeartConditionForm" component={HeartConditionForm} />
-
         <Stack.Screen name="UploadEcgScreen" component={UploadEcgScreen} />   
         <Stack.Screen name="PredictViaHeartForm" component={PredictViaHeartForm}/>
       </Stack.Navigator>

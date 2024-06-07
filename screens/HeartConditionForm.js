@@ -58,8 +58,8 @@ export default function HeartConditionForm() {
         }
       );
       const data = await response.json();
-
       if(data.results == 1|| data.results == 0){
+        console.log("j")
         setLoading(false)
         navigation.navigate('PredictViaHeartForm',{dataresponse:data.results,
           age: age,
@@ -72,7 +72,7 @@ export default function HeartConditionForm() {
           BMI: BMI
         })
       }else{      
-        //  setLoading(false)
+         setLoading(false)
 
         Alert.alert("There might be some issue, kindly fill the form correctly")
       }
