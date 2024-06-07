@@ -5,10 +5,10 @@ import {
   View,
   Text,
   TextInput,
-  Image,
   TouchableOpacity,
   ScrollView,
-  Alert,
+  ActivityIndicator,
+  Alert
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -23,8 +23,12 @@ export default function HeartConditionForm() {
   const [Weight, onChangeWeight] = React.useState("");
   const [heightInCm, onChangeHeightinCm] = React.useState("");
   const [BMI, onChangeBMI] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
 
   const handleForm = async () => {
+    setLoading(true);
+
     let sex = null;
     if (Sex == "Male" || Sex == "male") {
       sex = 1;
@@ -54,8 +58,28 @@ export default function HeartConditionForm() {
         }
       );
       const data = await response.json();
-      Alert.alert(data.prediction_class)
-      console.log(data);
+
+      if(data.results == 1|| data.results == 0){
+        setLoading(false)
+        navigation.navigate('PredictViaHeartForm',{dataresponse:data.prediction_class,
+          age: age,
+          Sex: Sex,
+          SysBP: sysBp,
+          DiaBP: diaBp,
+          HR: heartRate,
+          weightKg: Weight,
+          heightInCm: heightInCm,
+          BMI: BMI
+        })
+      }else{      
+          setLoading(false)
+
+        Alert.alert("There might be some issue, kindly fill the form correctly")
+      }
+     // Alert.alert(data.prediction_class)
+
+     //navigation.navigate('PredictViaHeartForm',{dataresponse:data.prediction_class})
+      console.log(data.resp);
     } catch (error) {
       console.error("",error);
     }
@@ -283,7 +307,13 @@ export default function HeartConditionForm() {
                 }}
               />
             </View>
-
+            {loading == true ? (
+              <ActivityIndicator
+                size="large"
+                color="white"
+                style={{ marginTop: "12%" }}
+              />
+            ) : (
             <TouchableOpacity
               style={{
                 marginTop: "15%",
@@ -308,6 +338,7 @@ export default function HeartConditionForm() {
                 Submit Form
               </Text>
             </TouchableOpacity>
+            )}
           </View>
         </View>
       </ScrollView>
