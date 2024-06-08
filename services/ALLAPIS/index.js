@@ -17,6 +17,9 @@ export const adduserhealthlogs = (params) => {
     return Api(endPoints.adduserhealthlogs, params, requestType.POST)
 }
 
+export const getHealthlogdata = (_id) => {
+    return Api(`${endPoints.getHealthlogdata}/${_id}`, null, requestType.GET)
+}
 // export const resetPasswordUser = (params) => {
 //     return Api(endPoints.resetPassword, params, requestType.POST)
 // }

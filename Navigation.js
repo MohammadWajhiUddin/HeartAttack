@@ -58,7 +58,7 @@ function MyTabs() {
 function Navigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="MyTabs">
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="SplashScreen">
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="SignupScreen" component={SignupScreen} />

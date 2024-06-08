@@ -9,7 +9,7 @@ export const endPoints = {
     registerUser: "registerUser",
     loginUser: "loginUser",
     adduserhealthlogs: "adduserhealthlogs",
-
+    getHealthlogdata:"getHealthlogdata"
     // //User
     // getUser: "getUser",
     // updateUser: "updateUserProfile",

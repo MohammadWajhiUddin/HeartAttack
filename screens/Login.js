@@ -41,7 +41,6 @@ export default function Login() {
       setLoading(false);
     }
   };
-
   const storeData = async (value) => {
     try {
       const jsonValue = JSON.stringify(value);
