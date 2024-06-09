@@ -39,14 +39,14 @@ export default function HeartConditionForm() {
 
     try {
       const response = await fetch(
-        "http://192.168.100.17:5000/predictHeartDisease",
+        "https://flaskapi-fqgv.onrender.com/predictHeartDisease",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            age: age,
+            age: parseInt(age),
             sex: sex,
             SysBP: sysBp,
             DiaBP: diaBp,
@@ -57,9 +57,11 @@ export default function HeartConditionForm() {
           }),
         }
       );
+      if (!response.ok) { // Check for HTTP errors
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       if(data.results == 1|| data.results == 0){
-        console.log("j")
         setLoading(false)
         navigation.navigate('PredictViaHeartForm',{dataresponse:data.results,
           age: age,
@@ -73,14 +75,14 @@ export default function HeartConditionForm() {
         })
       }else{      
          setLoading(false)
-
-        Alert.alert("There might be some issue, kindly fill the form correctly")
+         Alert.alert("There might be some issue, kindly fill the form correctly")
       }
      // Alert.alert(data.prediction_class)
 
      //navigation.navigate('PredictViaHeartForm',{dataresponse:data.prediction_class})
     } catch (error) {
-      console.error("",error);
+      console.error("API Error:",error);
+      Alert.alert("Error", "There was a problem with the request. Please try again.");
     }
   };
 

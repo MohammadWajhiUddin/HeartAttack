@@ -18,7 +18,7 @@ import { PhotoIcon, CameraIcon ,ArrowLeftStartOnRectangleIcon} from "react-nativ
 
 import * as ImagePicker from "expo-image-picker";
 
-export default function Camerascreen({ navigation }) {
+export default function Camerascreen(/*{ navigation }*/) {
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
@@ -100,7 +100,7 @@ export default function Camerascreen({ navigation }) {
         name: 'photo.png',
     });
     try {
-        const response = await fetch('http://192.168.100.17:5000/predictimage', {
+      const response = await fetch("https://flaskapi-fqgv.onrender.com/predictimage", {
             method: 'POST',
             body: photoData,
         });
@@ -108,11 +108,12 @@ export default function Camerascreen({ navigation }) {
             console.log(response.status);
         }
         const responseJson = await response.json();
-//navigation.navigate('Result', { prediction: responseJson });
+       // navigation.navigate('Result', { prediction: responseJson });
         console.log("response",responseJson);
         Alert.alert("Response from Ml",responseJson.class)
-       
+
     } catch (error) {
+        Alert.alert('Error', 'An error occurred while processing your request.');
         console.log(error);
     }
   }
