@@ -1,6 +1,6 @@
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
-
+import baseurl from "../baseurl";
 import {
   View,
   Text,
@@ -39,14 +39,14 @@ export default function HeartConditionForm() {
 
     try {
       const response = await fetch(
-        "http://192.168.100.17:5000/predictHeartDisease",
+        `${baseurl}/predictHeartDisease`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            age: age,
+            age: parseInt(age),
             sex: sex,
             SysBP: sysBp,
             DiaBP: diaBp,
@@ -59,7 +59,6 @@ export default function HeartConditionForm() {
       );
       const data = await response.json();
       if(data.results == 1|| data.results == 0){
-        console.log("j")
         setLoading(false)
         navigation.navigate('PredictViaHeartForm',{dataresponse:data.results,
           age: age,

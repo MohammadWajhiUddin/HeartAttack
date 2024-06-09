@@ -34,7 +34,6 @@ export default function Login() {
     let response = await loginUser(payload);
     if (response.status == 201) {
       setLoading(false);
-      Alert.alert("User Found Successfully");
       storeData(response.data.data);
     } else {
       Alert.alert(response.data);

@@ -14,11 +14,12 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign } from "react-native-vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation,useIsFocused } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { BarChart } from "react-native-chart-kit";
 import { getHealthlogdata } from "../services/ALLAPIS";
 import Dialog from "react-native-dialog";
+
 
 export default function UserProfileScreen() {
   const navigation = useNavigation();
@@ -27,7 +28,7 @@ export default function UserProfileScreen() {
   const [data, setData] = useState(null);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const isFocoused = useIsFocused()
   const showDialog = () => {
     setVisible(true);
   };
@@ -48,10 +49,14 @@ export default function UserProfileScreen() {
   };
 
   useEffect(() => {
-    setTimeout(() => getData(), 6000);
-  }, []);
+    if(isFocoused){
+      getData()
+
+    }
+  }, [isFocoused]);
 
   const getData = async () => {
+    console.log("Called")
     try {
       const jsonValue = await AsyncStorage.getItem("UserData");
       if (jsonValue != null) {

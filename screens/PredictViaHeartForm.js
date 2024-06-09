@@ -67,6 +67,7 @@ export default function PredictViaHeartForm({ route }) {
       Weight: weightKg,
       Height: heightInCm,
       BMI: BMI,
+      createdat:Date.now()
     };
 
     let response = await adduserhealthlogs(payload);

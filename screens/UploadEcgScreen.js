@@ -17,6 +17,7 @@ import { PhotoIcon, CameraIcon ,ArrowLeftStartOnRectangleIcon} from "react-nativ
 
 
 import * as ImagePicker from "expo-image-picker";
+import baseurl from "../baseurl";
 
 export default function Camerascreen({ navigation }) {
   let cameraRef = useRef();
@@ -90,7 +91,6 @@ export default function Camerascreen({ navigation }) {
     
   };
 
-  console.log("photos")
 
   async function sendPhoto() {
     const photoData = new FormData();
@@ -100,10 +100,10 @@ export default function Camerascreen({ navigation }) {
         name: 'photo.png',
     });
     try {
-        const response = await fetch('http://192.168.100.17:5000/predictimage', {
+        const response = await fetch(`${baseurl}/predictimage`, {
             method: 'POST',
             body: photoData,
-        });
+        })
         if (response.status !== 200) {
             console.log(response.status);
         }
