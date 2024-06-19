@@ -109,8 +109,7 @@ export default function Camerascreen({ navigation }) {
         }
         const responseJson = await response.json();
 //navigation.navigate('Result', { prediction: responseJson });
-        console.log("response",responseJson);
-        Alert.alert("Response from Ml",responseJson.class)
+        navigation.navigate('PredictViaEcgImages',{result:responseJson.class})
        
     } catch (error) {
         console.log(error);
@@ -147,7 +146,7 @@ export default function Camerascreen({ navigation }) {
             }}
             onPress={() => {
                sendPhoto();
-               // savePhoto();
+              // savePhoto();
             }}
           >
             <Text style={{ color: "#ffffff", fontFamily: "monospace" }}>

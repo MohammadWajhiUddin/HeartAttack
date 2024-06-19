@@ -12,6 +12,9 @@ import HeartConditionForm from "./screens/HeartConditionForm";
 import PredictViaHeartForm from "./screens/PredictViaHeartForm";
 import { HomeIcon, UserIcon } from "react-native-heroicons/solid";
 import UserProfileScreen from './screens/UserProfileScreen'
+import PredictViaEcgImages from "./screens/PredictViaEcgImages";
+
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -66,6 +69,7 @@ function Navigation() {
         <Stack.Screen name="HeartConditionForm" component={HeartConditionForm} />
         <Stack.Screen name="UploadEcgScreen" component={UploadEcgScreen} />   
         <Stack.Screen name="PredictViaHeartForm" component={PredictViaHeartForm}/>
+        <Stack.Screen name="PredictViaEcgImages" component={PredictViaEcgImages}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
